@@ -12,8 +12,9 @@ document.getElementById('formLivro').addEventListener('submit', function (event)
     if (idLivro.length > 0) { //Se possuir o ID, enviamos junto com o objeto
         livro = {
             "_id": idLivro,
+            "titulo": document.getElementById('titulo').value,
             "paginas": document.getElementById('paginas').value,
-            "data_de_publicacao": document.getElementById('publicacao').value,
+            "data_publicacao": document.getElementById('publicacao').value,
             "preco": document.getElementById('preco').value,
             "origem": {
                 "autora": document.getElementById('autora').value,
@@ -22,8 +23,9 @@ document.getElementById('formLivro').addEventListener('submit', function (event)
         }
     } else {
         livro = {
+            "titulo": document.getElementById('titulo').value,
             "paginas": document.getElementById('paginas').value,
-            "data_de_publicacao": document.getElementById('publicacao').value,
+            "data_publicacao": document.getElementById('publicacao').value,
             "preco": document.getElementById('preco').value,
             "origem": {
                 "autora": document.getElementById('autora').value,
@@ -31,7 +33,7 @@ document.getElementById('formLivro').addEventListener('submit', function (event)
             }
         }
     }
-    salvaPrestador(livro)
+    salvaLivro(livro)
 })
 
 async function salvaLivro(livro) {    
@@ -79,7 +81,7 @@ async function salvaLivro(livro) {
             },
             body: JSON.stringify(livro)
         })
-            .then(response => response.json())
+            .then(response => response.json()) 
             .then(data => {
                 // Verificar se o token foi retornado        
                 if (data.acknowledged) {
@@ -124,7 +126,7 @@ async function carregaLivros() {
                 <tr>
                    <td>${livro.titulo}</td>
                    <td>${livro.pagina}</td>
-                   <td>${livro.data_de_publicacao}</td>
+                   <td>${livro.publicacao}</td>
                    <td>${livro.autora}</td>
                    <td>${livro.editora}</td>
                    <td>
@@ -178,7 +180,7 @@ async function buscaLivroPeloId(id) {
                 document.getElementById('id').value = data[0]._id
                 document.getElementById('titulo').value = data[0].titulo
                 document.getElementById('paginas').value = data[0].paginas
-                document.getElementById('inicio').value = data[0].data_de_publicacao
+                document.getElementById('publicacao').value = data[0].data_publicacao
                 document.getElementById('autora').value = data[0].autora
                 document.getElementById('editora').value = data[0].editora               
             }
